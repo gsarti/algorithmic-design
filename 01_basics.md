@@ -28,3 +28,10 @@ Big omega notation is the same concept, but in the best case scenario when f shr
 
 ### Abstract Data Types
 
+Arrays, Single Linked Lists, Double Linked Lists, Queues (FIFO), Stacks (LIFO).
+
+## Graphs
+
+Nodes, edges, directed and undirected, path as sequence of edges, connected and acyclic graphs. A connected, acyclic graph is called tree. If a node is selected to be the root, the tree becomes a data structure.
+
+The depth of a node is its distance from the root in term of edges. All the nodes having the same depth are said to be on the same level. Parent, children and siblings nodes. Leaves and internal nodes. Height as max depth among leaves. N-ary trees with n children, complete if all the internal nodes have n children.
