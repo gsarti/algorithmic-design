@@ -27,6 +27,6 @@ The new complexity equation is:
 
 $$T_M(n) = 7 \times T_M(\frac{n}{2}) + \Theta(n^2)$$
 
-since the products have been reduced to 7. The final asymptotic complexity of Strassen algorithm is $\in \Theta(n^{log_27})$.
+since the products have been reduced to 7. The final asymptotic complexity of Strassen algorithm is $\in \Theta(n^{log_27}) \approx \Theta(n^{2.81})$ .
 
 The algorithm is not in-place, a.k.a. it requires a non-constant amount of additional memory. This shows how a careful handling of the auxiliary memory may make the difference in implementation, simply by reducing the number of recursive calls.
