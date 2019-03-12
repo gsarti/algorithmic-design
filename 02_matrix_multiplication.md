@@ -27,6 +27,6 @@ The new complexity equation is:
 
 <p align="center"><img src="/tex/c1aa47e5b7208ce8dec759d0b33eeed4.svg?invert_in_darkmode&sanitize=true" align=middle width=210.77631135pt height=29.47417935pt/></p>
 
-since the products have been reduced to 7. The final asymptotic complexity of Strassen algorithm is <img src="/tex/a0bf961bafa7f3792db19e25f604a91a.svg?invert_in_darkmode&sanitize=true" align=middle width=81.87828495pt height=27.91243950000002pt/>.
+since the products have been reduced to 7. The final asymptotic complexity of Strassen algorithm is <img src="/tex/eed5fc3d9bff3a57b94e9b18e0a4e168.svg?invert_in_darkmode&sanitize=true" align=middle width=163.61731154999998pt height=27.91243950000002pt/> .
 
 The algorithm is not in-place, a.k.a. it requires a non-constant amount of additional memory. This shows how a careful handling of the auxiliary memory may make the difference in implementation, simply by reducing the number of recursive calls.
