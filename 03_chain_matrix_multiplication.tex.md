@@ -10,4 +10,6 @@ We use a matrix $m$ to store the number of multiplication computed that way and 
 
 Inside $m$, in position $(i,j)$ i will find the minimal number of scalar multiplications needed to solve the chain matrix multiplication between matrices $A_i$ and $A_j$ of the original chain $A_1 \dots A_i \dots A_j \dots A_n$.
 
-The complexity of the algorithm is $O(n^3)$.
+By performing the same task iteratively we can avoid recursion and thus avoid the memory required by each step.
+
+The complexity of the algorithm is $\Theta(n^3)$, where n is the size of the chain. This result is much better than the original complexity to perform matrix multiplication, which is $\Theta(2^n)$.
