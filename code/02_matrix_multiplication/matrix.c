@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 int naive_matrix_mult(float **C,
                         float **A,
@@ -58,10 +59,11 @@ int same_matrix(float **A, const size_t A_rows, const size_t A_cols,
    if ((A_rows != B_rows) || (A_cols != B_cols)) {
      return 0;
    }
-
+    int diff = 1;
    for (size_t i=0; i<A_rows; i++) {
      for (size_t j=0; j<A_cols; j++) {
         if (A[i][j] != B[i][j]) {
+           printf("%d != %d", A[i][j], B[i][j]);
 	         return 0;
         }
      }

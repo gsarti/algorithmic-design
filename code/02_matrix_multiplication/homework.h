@@ -2,6 +2,6 @@
 
 #include <stdlib.h>
 
-float * strassen_opt(const float * A, const float * B, const size_t size);
+void strassen_opt(float **C, float **A, float **B, const size_t n);
 
 #endif // __HOMEWORK__
