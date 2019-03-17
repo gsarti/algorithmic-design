@@ -63,7 +63,6 @@ int same_matrix(float **A, const size_t A_rows, const size_t A_cols,
    for (size_t i=0; i<A_rows; i++) {
      for (size_t j=0; j<A_cols; j++) {
         if (A[i][j] != B[i][j]) {
-           printf("%.5f != %.5f", A[i][j], B[i][j]);
 	         return 0;
         }
      }

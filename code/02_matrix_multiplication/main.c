@@ -24,17 +24,6 @@ double get_execution_time(const struct timespec b_time,
                    (e_time.tv_nsec-b_time.tv_nsec)/1E9;
 }
 
-void print(float ** A, const size_t size)
-{
-  printf("Matrix:");
-  for (size_t i = 0; i < size; i++) {
-    for (size_t j = 0; j < size; j++) {
-      printf("%d  ", A[i][j]);
-    }
-    printf("\n");
-  }
-}
-
 int main(int argc, char *argv[]) {
 
   const size_t n=1<<11;
@@ -75,13 +64,6 @@ int main(int argc, char *argv[]) {
     
     printf("\t%d\t", same_matrix(C0, i, i, C1, i, i));
     printf("\t%d\n", same_matrix(C0, i, i, C2, i, i));
-
-    // if (!same_matrix(C0, i, i, C2, i, i))
-    // {
-    //   print(C0, i);
-    //   print(C2, i);
-    //   break;
-    // }
   }
 
   deallocate_matrix(C0,n);

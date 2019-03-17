@@ -81,16 +81,16 @@ void strassen_aux_opt(Matrix A, Matrix B, Matrix C, Matrix M, const size_t size)
   // S5 = A11 + A22
   sum_blocks(A11, A22, C22, half_size);
   // S6 = B11 + B22
-  sum_blocks(B11, B12, C21, half_size);
+  sum_blocks(B11, B22, C21, half_size);
   // P5 = S5 x S6
   strassen_aux_opt(C22, C21, M12, M22, half_size);
 
   // S7 = A12 - A22
   sub_blocks(A12, A22, C22, half_size);
   // S8 = B21 + B22
-  sum_blocks(B21, B22, C12, half_size);
+  sum_blocks(B21, B22, C21, half_size);
   // P6 = S7 x S8
-  strassen_aux_opt(C22, C12, M11, M22, half_size);
+  strassen_aux_opt(C22, C21, M11, M22, half_size);
 
   // C11 = (P5 + P4) - P2 + P6
   sum_blocks(M12, M21, C11, half_size);
