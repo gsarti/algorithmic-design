@@ -25,6 +25,14 @@ int ** allocate_matrix(const int rows, const int cols)
    return matrix;
 }
 
+void deallocate_matrix(int **A, const size_t rows)
+{
+  for (size_t i=0; i<rows; i++) {
+    free(A[i]);
+  }
+  free(A);
+}
+
 void matrix_chain_aux(int * P, int ** m, int ** s, size_t i, size_t j)
 {
     int q = 0;
@@ -40,7 +48,7 @@ void matrix_chain_aux(int * P, int ** m, int ** s, size_t i, size_t j)
         }
     }
 }
-
+  
 int matrix_chain(int * P, int n)
 {
     int ** m = allocate_matrix(n, n);
@@ -60,6 +68,8 @@ int matrix_chain(int * P, int n)
     }
     print_matrix(m,n - 1);
     print_matrix(s,n - 1);
+    deallocate_matrix(m, n-1);
+    deallocate_matrix(s, n-1);
 }
 
 int main()
