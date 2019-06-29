@@ -47,4 +47,3 @@ Routing techniques can be applied to many fields:
 * Parcel delivers
 
 * Travelers commuting
-

@@ -1,0 +1,7 @@
+# VSCode
+
+.vscode/
+
+# Output files
+
+exercises/*.x

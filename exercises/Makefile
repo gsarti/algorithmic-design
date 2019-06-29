@@ -1,14 +1,15 @@
 CC = gcc
+OPT = -O4
 
-all: ex_strassen ex_chain_mult
+all: 01_strassen 02_chain_mult
 
-ex_strassen:
-	$(CC) strassen/main.c strassen/matrix.c strassen/strassen.c strassen/homework.c -o strassen_test
+01_strassen:
+	$(CC) $(OPT) strassen/main.c strassen/matrix.c strassen/strassen.c strassen/homework.c -o strassen.x
 
-ex_chain_mult:
-	$(CC) chain_mat_mult/main.c chain_mat_mult/matrix.c chain_mat_mult/chain_mm.c -o chain_mult
+02_chain_mult:
+	$(CC) $(OPT) chain_mult/main.c chain_mult/matrix.c chain_mult/chain_mm.c -o chain_mult.x
 
 clean: 
-	find . -type f -executable -exec rm '{}' \;
+	@rm *.x
 
 .PHONY: all clean
