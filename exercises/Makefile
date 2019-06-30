@@ -1,13 +1,13 @@
 CC = gcc
 OPT = -O4
 
-all: 01_strassen 02_chain_mult
+all: strassen chain_mult
 
-01_strassen:
-	$(CC) $(OPT) strassen/main.c strassen/matrix.c strassen/strassen.c strassen/homework.c -o strassen.x
+strassen:
+	$(CC) $(OPT) 01_strassen/main.c 01_strassen/matrix.c 01_strassen/strassen.c 01_strassen/homework.c -o strassen.x
 
-02_chain_mult:
-	$(CC) $(OPT) chain_mult/main.c chain_mult/matrix.c chain_mult/chain_mm.c -o chain_mult.x
+chain_mult:
+	$(CC) $(OPT) 02_chain_mult/main.c 02_chain_mult/matrix.c 02_chain_mult/chain_mm.c -o chain_mult.x
 
 clean: 
 	@rm *.x
