@@ -13,10 +13,12 @@
 
 /**
  * @brief Insertion sort algorithm
- * @param  array  A pointer to the array of integers to be sorted.
+ * @param  array  A pointer to the array to be sorted.
+ * @param  start  The beginning of the array to be sorted.
  * @param  size   The dimension of the array of integers.
  */
-void insertion_sort(int * array, size_t size);
+void insertion_sort(float * array, size_t start, size_t size);
+void insertion_sort_int(int * array, size_t start, size_t size);
 
 /* QUICKSORT */
 
@@ -34,18 +36,21 @@ int partition(int * A, size_t low, size_t high, size_t pivot);
 
 /**
  * @brief Recursive quicksort auxiliary method.
- * @param  A     A pointer to the array of integers to be sorted.
- * @param  low   The lower bound index of the array.
- * @param  high  The upper bound index of the array. 
+ * @param  A              A pointer to the array of integers to be sorted.
+ * @param  low            The lower bound index of the array.
+ * @param  high           The upper bound index of the array.
+ * @param  central_pivot  If True, uses central array value as pivot.
  */
-void quicksort_rec(int * A, size_t low, size_t high);
+void quicksort_rec(int * A, size_t low, size_t high, int central_pivot);
 
 /**
  * @brief Quicksort algorithm
- * @param  array  A pointer to the array of integers to be sorted.
- * @param  size   The dimension of the array of integers.
+ * @param  array  A pointer to the array to be sorted.
+ * @param  start  The beginning of the array to be sorted.
+ * @param  size   The dimension of the array.
+ * @param  central_pivot  If True, uses central array value as pivot.
  */
-void quicksort(int * array, size_t size);
+void quicksort(int * array, size_t start, size_t size, int central_pivot);
 
 /* HEAPSORT */
 

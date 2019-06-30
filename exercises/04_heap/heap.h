@@ -11,19 +11,19 @@
 
 /**
  * @brief A Binary heap
- * @var H     A pointer to the array of integers of the heap.
+ * @var heap     A pointer to the array of integers of the heap.
  * @var size  The size of the array of values.
  * @var comp  The comparison function used by the binary heap.
  */
 typedef struct BinaryHeap
 {
-    int * H;
+    int * heap;
     size_t size;
     int (* comp) (int, int);
 } BinaryHeap;
 
 // Ctor and dtor for the heap structure.
-BinaryHeap build_heap(int * A, size_t size_a, int (*fcomp)(int,int));
+BinaryHeap build_heap(int * a, size_t size_a, int (*fcomp)(int,int));
 void free_heap(BinaryHeap H);
 
 // Returns the root node and the last node of the heap.
@@ -48,13 +48,13 @@ int heap_min(BinaryHeap H);
 void heapify(BinaryHeap H, int i);
 
 // Removes the minimal value in the heap based on comp.
-void remove_min(BinaryHeap H, int i);
+void remove_min(BinaryHeap H);
 
 // Decreases the key at index i setting it to val, based on comp.
 void heap_decrease_key(BinaryHeap H, int i, int val);
 
 // Inserts a new value in the heap.
-void heap_insert(BinaryHeap H, int value);
+void heap_insert(BinaryHeap H, int val);
 
 /* Extra methods */
 

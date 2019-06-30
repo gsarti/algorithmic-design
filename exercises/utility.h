@@ -9,12 +9,16 @@
 
 #include <stdlib.h>
 
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))
+
 /**
- * @brief Swaps the content of two integer pointers
- * @param  a  The first integer pointer
- * @param  b  The second integer pointer
+ * @brief Swaps the content of two pointers
+ * @param  a  The first pointer
+ * @param  b  The second pointer
  */
-void swap(int * a, int * b);
+void swap(float* a, float *b);
+void swap_int(int * a, int * b);
 
 /**
  * @brief Performs a naive matrix multiplication
@@ -28,19 +32,12 @@ void naive_matrix_mult(float **C, float **A, float **B,
                       const size_t B_rows, const size_t B_cols);
 
 /**
- * @brief Copies a matrix of floats.
- * @param    A           The matrix to be copied.
- * @param    rows, cols  The dimensions of the A matrix.
- * @return   float       The copied matrix.
- */
-float **copy_matrix(float **A, const size_t rows, const size_t cols);
-
-/**
  * @brief Allocates a matrix of size rows, cols in memory
  * @param    rows, cols  The dimensions of the matrix.
  * @return   float       The allocated matrix.
  */
 float **allocate_matrix(const size_t rows, const size_t cols);
+int **allocate_matrix_int(const size_t rows, const size_t cols);
 
 /**
  * @brief Deallocates a matrix from memory.
@@ -48,15 +45,44 @@ float **allocate_matrix(const size_t rows, const size_t cols);
  */
 void deallocate_matrix(void **A, const size_t rows);
 
+/**
+ * @brief Copies a matrix.
+ * @param    A           The matrix to be copied.
+ * @param    rows, cols  The dimensions of the A matrix.
+ * @return   float       The copied matrix.
+ */
+float **copy_matrix(float **A, const size_t rows, const size_t cols);
+int **copy_matrix_int(int **A, const size_t rows, const size_t cols);
+int *copy_vector_int(int *a, const size_t n);
+
+
 // Returns 1 if A and B are equal, 0 otherwise.
 int same_matrix(float **A, const size_t A_rows, const size_t A_cols,
 		        float **B, const size_t B_rows, const size_t B_cols);
+int same_matrix_int(int **A, const size_t A_rows, const size_t A_cols,
+		            int **B, const size_t B_rows, const size_t B_cols);
 
-/**
- * @brief Randomly fills matrix A with values between 0 and max.
- */
+// Returns 1 if A and B are approximately equal with precision prec, 0 otherwise
+int same_matrix_approx(float **A, const size_t A_rows, const size_t A_cols,
+		               float **B, const size_t B_rows, const size_t B_cols,
+                       float prec);
+
+// Randomly fills matrix A with values between 0 and max.
 void randomly_fill_matrix(float **A, const size_t A_rows, 
                           const size_t A_cols, int max);
+void randomly_fill_matrix_int(int **A, const size_t rows, 
+                              const size_t cols, const int max);
+void randomly_fill_matrix_unsigned_int(unsigned int **A, const size_t rows, 
+                                       const size_t cols, const unsigned int max);
+
+// Randomly fills matrix A with values sampled froma uniform distribution
+void randomly_fill_matrix_unif(float **A, const size_t rows, const size_t cols);
+
+// Prints the content of a matrix in console
+void print_matrix(float **A, const size_t rows, const size_t cols);
+void print_vector(float *a, const size_t n);
+void print_matrix_int(int **A, const size_t rows, const size_t cols);
+void print_vector_int(int *a, const size_t n);
 
 /**
  * @brief Get the execution time in seconds.
