@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "matrix.h"
+#include "../utility.h"
 
 #define CMM(M, row, col) M[row][col - row]
 

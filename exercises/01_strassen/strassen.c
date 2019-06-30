@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "matrix.h"
+#include "../utility.h"
 
 void sum_matrix_blocks(float **C,
                        const size_t C_f_row,
@@ -249,11 +249,11 @@ void strassen_aux(float **C, const size_t C_f_row, const size_t C_f_col,
                     n2);
 
   for (int i=0; i<10; i++) {
-    deallocate_matrix(S[i], n2);
+    deallocate_matrix((void **)S[i], n2);
   }
 
   for (int i=0; i<7; i++) {
-    deallocate_matrix(P[i], n2);
+    deallocate_matrix((void **)P[i], n2);
   }
 }
 
