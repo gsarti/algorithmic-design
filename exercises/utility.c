@@ -25,6 +25,16 @@ void swap_int(int * a, int * b)
     *b = temp;
 }
 
+int leq(int a, int b)
+{
+    return a <= b;
+}
+
+int geq(int a, int b)
+{
+    return a >= b;
+}
+
 void naive_matrix_mult(float **C, float **A, float **B,
                        const size_t A_rows, const size_t A_cols,
                        const size_t B_rows, const size_t B_cols)

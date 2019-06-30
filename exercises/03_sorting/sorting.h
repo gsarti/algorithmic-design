@@ -18,7 +18,7 @@
  * @param  size   The dimension of the array of integers.
  */
 void insertion_sort(float * array, size_t start, size_t size);
-void insertion_sort_int(int * array, size_t start, size_t size);
+void insertion_sort_int(int * array, size_t size);
 
 /* QUICKSORT */
 
@@ -50,15 +50,31 @@ void quicksort_rec(int * A, size_t low, size_t high, int central_pivot);
  * @param  size   The dimension of the array.
  * @param  central_pivot  If True, uses central array value as pivot.
  */
-void quicksort(int * array, size_t start, size_t size, int central_pivot);
+void quicksort(int * array, size_t size, int central_pivot);
 
 /* HEAPSORT */
 
 /**
- * @brief Heapsort algorithm
+ * @brief Heapsort algorithm.
  * @param  array  A pointer to the array of integers to be sorted.
  * @param  size   The dimension of the array of integers.
  */
 void heapsort(int * array, size_t size);
+
+/* COUNTING SORT */
+
+/**
+ * @brief Counting sort algorithm.
+ * @param  array  A pointer to the array of integers to be sorted.
+ * @param  size   The dimension of the array of integers.
+ * @param  bound  The upper bound for the domain of values in array.
+ */
+void counting_sort(int * array, size_t size, size_t bound);
+
+/* RADIX SORT */
+
+/* BUCKET SORT */
+
+/* SELECT ALGORITHM */
 
 #endif //SORTING_H__

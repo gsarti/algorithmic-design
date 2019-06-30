@@ -20,6 +20,10 @@
 void swap(float* a, float *b);
 void swap_int(int * a, int * b);
 
+// Return 1 if a <= b (leq) or a >= b (geq), 0 otherwise.
+int leq(int a, int b);
+int geq(int a, int b);
+
 /**
  * @brief Performs a naive matrix multiplication
  * @param  C               Result matrix.

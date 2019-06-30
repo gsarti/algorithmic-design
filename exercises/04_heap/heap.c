@@ -87,11 +87,13 @@ void heapify(BinaryHeap H, int i)
     }
 }
 
-void remove_min(BinaryHeap H)
+int remove_min(BinaryHeap H)
 {
+    int min = H.heap[root()];
     H.heap[root()] = H.heap[last(H)];
     H.size--;
     heapify(H, root());
+    return min;
 }
 
 void heap_decrease_key(BinaryHeap H, int i, int val)

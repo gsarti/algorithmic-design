@@ -13,7 +13,6 @@
 #include "../utility.h"
 
 #define ITERATIONS 5
-int leq(int a, int b) { return a <= b; }
 
 int main()
 {

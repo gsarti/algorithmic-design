@@ -24,10 +24,10 @@ void insertion_sort(float * array, size_t start, size_t size)
     }
 }
 
-void insertion_sort_int(int * array, size_t start, size_t size)
+void insertion_sort_int(int * array, size_t size)
 {
     size_t j;
-    for(size_t i = start + 1; i < size; i++)
+    for(size_t i = 1; i < size; i++)
     {
         j = i;
         while (j > 1 && array[j] < array[j-1])
@@ -74,11 +74,44 @@ void quicksort_rec(int * A, size_t low, size_t high, int central_pivot)
     }
 }
 
-void quicksort(int * array, size_t start, size_t size, int central_pivot)
+void quicksort(int * array, size_t size, int central_pivot)
 {
-    quicksort_rec(array, start, size, central_pivot);
+    quicksort_rec(array, 0, size, central_pivot);
 }
 
+/* HEAPSORT */
+
+void heapsort(int * array, size_t size)
+{
+    BinaryHeap H = build_heap(array, size, geq);
+
+    for (int i = size - 1; i > 0; i--)
+    {
+        array[i] = remove_min(H);
+    }
+}
+
+/* COUNTING SORT */
+
+void counting_sort(int * array, size_t size, size_t bound)
+{
+    int * c = (int *)calloc(bound, sizeof(int));
+    int * res = (int *)malloc(sizeof(int) * size);
+
+    for (int i = 0; i < size; i++)
+        c[array[i]]++;
+    
+    for (int j = 1; j < bound; j++)
+        c[j] += c[j - 1];
+    
+    for (int i = size - 1; i >= 0; i--) 
+    {
+        res[c[array[i]] - 1] = array[i];
+        c[array[i]]--;
+    }
+
+    free(c);
+}
 
 
 
