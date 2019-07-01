@@ -182,7 +182,7 @@ void bucket_sort(float * array, size_t size)
 
     for (size_t i = 0; i < size; i++)
     {
-        append(B[(int)(array[i] * size)], array[i]);
+        append(&B[(int)(array[i] * size)], array[i]);
     }
 
     for(size_t i = 0; i < size; i++)
@@ -201,6 +201,34 @@ void bucket_sort(float * array, size_t size)
 }
 
 /* SELECT ALGORITHM */
+
+int partition_balanced(int * array, size_t low, size_t high, size_t pivot)
+{
+    swap_int(&array[low], &array[pivot]);
+    int i = low + 1;
+    int j = high - 1;
+    pivot = low;
+    int side = 1;
+
+    while(i <= j)
+    {
+        if (array[i] == array[pivot])
+        {
+            side = !side;
+        }
+        if(array[i] > array[pivot] || array[i] == array[pivot] && !side)
+        {
+            swap_int(&array[i], &array[j]);
+            --j;
+        }
+        else
+        {
+            i++;
+        }
+    }
+    swap_int(&array[pivot], &array[j]);
+    return j;
+}
 
 int select_pivot(int * array, size_t low, size_t high)
 {
@@ -229,7 +257,7 @@ int select_pivot(int * array, size_t low, size_t high)
 int selection(int * array, size_t low, size_t high, size_t i)
 {
     int j = select_pivot(array, low, high);
-    int k = partition(array, low, high, j);
+    int k = partition_rep(array, low, high, j);
     
     if(i == k)
     {

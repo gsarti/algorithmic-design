@@ -44,7 +44,7 @@ Node * get_node(Vector V, size_t idx);
 float get_val(Vector V, size_t idx);
 
 // Appends a new node to the end of the vector
-void append(Vector V, float val);
+void append(Vector * V, float val);
 
 // Ctor and dtor for a bucket (list of vectors)
 Vector* build_bucket(size_t size);

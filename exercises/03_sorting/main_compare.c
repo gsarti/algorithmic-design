@@ -12,7 +12,6 @@
 #include "sorting.h"
 
 #define MAX_SIZE 1000000000
-#define BUCKET_STOP 65536
 #define INSERTION_STOP 131072
 #define PRINT_STOP 10000000
 #define COUNTING_STOP 33554432
@@ -25,8 +24,12 @@ int main(int argc, char *argv[])
     printf("----\t\t---------\t-----\t\t----\t\t-----\t\t-----\t\t------\n");
     for (size_t i = 256; i < MAX_SIZE; i *= 2) 
     {
-        unsigned int ** mat = allocate_matrix_unsigned_int(6, i);
-        random_fill_matrix_unsigned_int(mat, 6, i, MAX_SIZE);
+        unsigned int ** mat = allocate_matrix_unsigned_int(5, i);
+        random_fill_matrix_unsigned_int(mat, 5, i, MAX_SIZE);
+
+        // Matrix of uniformly distributed float values for Bucket sort.
+        float ** mat_unif = allocate_matrix(1, i);
+        random_fill_matrix_unif(mat_unif, 1, i);
 
         double insert_time, quick_time, heap_time, count_time, radix_time, bucket_time;
         if(i <= INSERTION_STOP)
@@ -63,42 +66,36 @@ int main(int argc, char *argv[])
             radix_time =  get_execution_time(b_time, e_time);
         }
 
-        if(i <= BUCKET_STOP)
-        {
-            clock_gettime(CLOCK_REALTIME, &b_time);
-            bucket_sort((float *)mat[5], i);
-            clock_gettime(CLOCK_REALTIME, &e_time);
-            bucket_time =  get_execution_time(b_time, e_time);
+        clock_gettime(CLOCK_REALTIME, &b_time);
+        bucket_sort(mat_unif[0], i);
+        clock_gettime(CLOCK_REALTIME, &e_time);
+        bucket_time =  get_execution_time(b_time, e_time);
 
+        if(i <= INSERTION_STOP)
+        {
             printf("%d\t\t%lf\t%lf\t%lf\t%lf\t%lf\t%lf\n",
                     i, insert_time, quick_time, heap_time, count_time, 
                     radix_time, bucket_time);
         }
-        else if(i <= INSERTION_STOP)
-        {
-            printf("%d\t\t%lf\t%lf\t%lf\t%lf\t%lf\n",
-                    i, insert_time, quick_time, heap_time, count_time, 
-                    radix_time);
-        }
         else if (i <= PRINT_STOP)
         {
-            printf("%d\t\t\t\t%lf\t%lf\t%lf\t%lf\n",
+            printf("%d\t\t\t\t%lf\t%lf\t%lf\t%lf\t%lf\n",
                     i, quick_time, heap_time, count_time, 
-                    radix_time);
+                    radix_time, bucket_time);
         }
         else if (i <= COUNTING_STOP)
         {
-            printf("%d\t\t\t%lf\t%lf\t%lf\t%lf\n",
+            printf("%d\t\t\t%lf\t%lf\t%lf\t%lf\t%lf\n",
                     i, quick_time, heap_time, count_time, 
-                    radix_time);
+                    radix_time, bucket_time);
         }
         else
         {
-            printf("%d\t\t\t%lf\t%lf\n",
-                    i, quick_time, heap_time);
+            printf("%d\t\t\t%lf\t%lf\n", i, quick_time, heap_time);
         }
         
-        deallocate_matrix((void **)mat, 6);
+        deallocate_matrix((void **)mat, 5);
+        deallocate_matrix((void **)mat_unif, 1);
     }
     return 0;
 }

@@ -58,17 +58,18 @@ float get_val(Vector V, size_t idx)
     return get_node(V, idx)->val;
 }
 
-void append(Vector V, float val)
+void append(Vector * V, float val)
 {
-    if(V.length == 0)
+    if(V->length == 0)
     {
-        V.root = build_node(val);
+        V->root = build_node(val);
     }
     else
     {
-        Node * last = get_node(V, V.length - 1);
+        Node * last = get_node(*V, V->length - 1);
         last->next = build_node(val);
     }
+    V->length++;
 }
 
 Vector* build_bucket(size_t size)

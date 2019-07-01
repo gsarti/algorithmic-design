@@ -84,6 +84,8 @@ void bucket_sort(float * array, size_t size);
 
 /* SELECT ALGORITHM */
 
+int partition_balanced(int * array, size_t low, size_t high, size_t pivot);
+
 int select_pivot(int * array, size_t low, size_t high);
 
 int selection(int * array, size_t low, size_t high, size_t i);
