@@ -78,6 +78,17 @@ int **allocate_matrix_int(const size_t rows, const size_t cols)
     return A;
 }
 
+unsigned int **allocate_matrix_unsigned_int(const size_t rows, const size_t cols)
+{
+    unsigned int **A=(unsigned int **)malloc(sizeof(unsigned int *)*rows);
+
+    for (size_t i=0; i<rows; i++) 
+    {
+        A[i]=(unsigned int *)malloc(sizeof(unsigned int)*cols);
+    }
+    return A;
+}
+
 void deallocate_matrix(void **A, const size_t rows)
 {
   for (size_t i = 0; i < rows; i++) 
@@ -113,14 +124,12 @@ int **copy_matrix_int(int **A, const size_t rows, const size_t cols)
     return C;
 }
 
-int *copy_vector_int(int *a, const size_t n)
+void copy_array_int(int *a, int *b, const size_t size)
 {
-    int * c = (int *)malloc(sizeof(int) * n);
-    for (size_t i = 0; i < n; i++) 
+    for (size_t i = 0; i < size; i++) 
     {
-        c[i] = a[i];
+        a[i] = b[i];
     }
-    return c;
 }
 
 int same_matrix(float **A, const size_t A_rows, const size_t A_cols,
@@ -244,7 +253,7 @@ void print_matrix(float **A, const size_t rows, const size_t cols)
     }
 }
 
-void print_vector(float *a, const size_t n)
+void print_array(float *a, const size_t n)
 {
     printf("\n");
     for(int i = 0; i < n; i++)
@@ -266,13 +275,26 @@ void print_matrix_int(int **A, const size_t rows, const size_t cols)
     }
 }
 
-void print_vector_int(int *a, const size_t n)
+void print_array_int(int *a, const size_t n)
 {
     printf("\n");
     for(int i = 0; i < n; i++)
     {
         printf("%d, ", a[i]);
     }
+}
+
+int max_array_int(int* array, size_t size)
+{
+    int max = array[0];
+    for (size_t i = 0; i < size; i++)
+    {
+        if(array[i] > max)
+        {
+            max = array[i];
+        }
+    }
+    return max;
 }
 
 double get_execution_time(const struct timespec b_time,

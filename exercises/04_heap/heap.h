@@ -47,9 +47,6 @@ int heap_min(BinaryHeap H);
 // Restores the heap property, auxiliary to build_heap.
 void heapify(BinaryHeap H, int i);
 
-// Removes the minimal value in the heap based on comp and returns it.
-int remove_min(BinaryHeap H);
-
 // Decreases the key at index i setting it to val, based on comp.
 void heap_decrease_key(BinaryHeap H, int i, int val);
 

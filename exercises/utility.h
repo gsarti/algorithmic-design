@@ -42,6 +42,7 @@ void naive_matrix_mult(float **C, float **A, float **B,
  */
 float **allocate_matrix(const size_t rows, const size_t cols);
 int **allocate_matrix_int(const size_t rows, const size_t cols);
+unsigned int **allocate_matrix_unsigned_int(const size_t rows, const size_t cols);
 
 /**
  * @brief Deallocates a matrix from memory.
@@ -57,7 +58,9 @@ void deallocate_matrix(void **A, const size_t rows);
  */
 float **copy_matrix(float **A, const size_t rows, const size_t cols);
 int **copy_matrix_int(int **A, const size_t rows, const size_t cols);
-int *copy_vector_int(int *a, const size_t n);
+
+// Copies array b into array a
+void copy_array_int(int *a, int *b, const size_t size);
 
 
 // Returns 1 if A and B are equal, 0 otherwise.
@@ -84,9 +87,12 @@ void randomly_fill_matrix_unif(float **A, const size_t rows, const size_t cols);
 
 // Prints the content of a matrix in console
 void print_matrix(float **A, const size_t rows, const size_t cols);
-void print_vector(float *a, const size_t n);
+void print_array(float *a, const size_t n);
 void print_matrix_int(int **A, const size_t rows, const size_t cols);
-void print_vector_int(int *a, const size_t n);
+void print_array_int(int *a, const size_t n);
+
+// Find the max value in an int array of size "size"
+int max_array_int(int* array, size_t size);
 
 /**
  * @brief Get the execution time in seconds.
