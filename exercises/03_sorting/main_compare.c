@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     for (size_t i = 256; i < MAX_SIZE; i *= 2) 
     {
         unsigned int ** mat = allocate_matrix_unsigned_int(6, i);
-        randomly_fill_matrix_unsigned_int(mat, 6, i, MAX_SIZE);
+        random_fill_matrix_unsigned_int(mat, 6, i, MAX_SIZE);
 
         double insert_time, quick_time, heap_time, count_time, radix_time, bucket_time;
         if(i <= INSERTION_STOP)

@@ -193,7 +193,7 @@ int same_matrix_approx(float **A, const size_t A_rows, const size_t A_cols,
     return 1;
 }
 
-void randomly_fill_matrix(float **A, const size_t rows, 
+void random_fill_matrix(float **A, const size_t rows, 
                           const size_t cols, const int max)
 {
     for (size_t i=0; i< rows; i++) 
@@ -205,7 +205,7 @@ void randomly_fill_matrix(float **A, const size_t rows,
     }
 }
 
-void randomly_fill_matrix_int(int **A, const size_t rows, 
+void random_fill_matrix_int(int **A, const size_t rows, 
                               const size_t cols, const int max)
 {
     for (size_t i=0; i< rows; i++) 
@@ -217,8 +217,8 @@ void randomly_fill_matrix_int(int **A, const size_t rows,
     }
 }
 
-void randomly_fill_matrix_unsigned_int(unsigned int **A, const size_t rows, 
-                                       const size_t cols, const unsigned int max)
+void random_fill_matrix_unsigned_int(unsigned int **A, const size_t rows, 
+                                     const size_t cols, const unsigned int max)
 {
     for (size_t i=0; i< rows; i++) 
     {
@@ -229,7 +229,7 @@ void randomly_fill_matrix_unsigned_int(unsigned int **A, const size_t rows,
     }
 }
 
-void randomly_fill_matrix_unif(float **A, const size_t rows, const size_t cols)
+void random_fill_matrix_unif(float **A, const size_t rows, const size_t cols)
 {
     for (size_t i=0; i< rows; i++) 
     {
@@ -239,6 +239,35 @@ void randomly_fill_matrix_unif(float **A, const size_t rows, const size_t cols)
         }
     }
 }
+
+void sequential_fill_array_int(int *a, const size_t size, int reverse)
+{
+    if (reverse)
+    {
+        for (size_t i = 0; i < size; i++) 
+        {
+            a[i] = size - i;
+        }
+    }
+    else
+    {
+        for (size_t i = 0; i < size; i++) 
+        {
+            a[i] = i;
+        }
+    }
+}
+
+void random_fill_array_unsigned_int(unsigned int *a, const size_t size, 
+                                    const unsigned int max)
+{
+    for (size_t i = 0; i < size; i++) 
+    {
+        a[i] = (unsigned int)(rand() % max);
+    }
+}
+
+
 
 void print_matrix(float **A, const size_t rows, const size_t cols)
 {

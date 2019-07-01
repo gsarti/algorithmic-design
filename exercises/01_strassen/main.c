@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
 
     srand(10);
 
-    randomly_fill_matrix(A, n, n, MAX_MAT_VALUE);
-    randomly_fill_matrix(B, n, n, MAX_MAT_VALUE);
+    random_fill_matrix(A, n, n, MAX_MAT_VALUE);
+    random_fill_matrix(B, n, n, MAX_MAT_VALUE);
 
     struct timespec b_time, e_time;
 

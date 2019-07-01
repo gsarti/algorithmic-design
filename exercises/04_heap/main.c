@@ -19,7 +19,7 @@ int main()
     const size_t heap_size = 1E8;
     int ** mat = allocate_matrix_int(ITERATIONS, heap_size);
     printf("Generating the value matrix...\n");
-    randomly_fill_matrix_int(mat, ITERATIONS, heap_size, heap_size);
+    random_fill_matrix_int(mat, ITERATIONS, heap_size, heap_size);
 
     struct timespec b_time, e_time;
     printf("Iteration\tTime (s)\n");

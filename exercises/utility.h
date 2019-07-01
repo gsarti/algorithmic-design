@@ -75,15 +75,21 @@ int same_matrix_approx(float **A, const size_t A_rows, const size_t A_cols,
                        float prec);
 
 // Randomly fills matrix A with values between 0 and max.
-void randomly_fill_matrix(float **A, const size_t A_rows, 
+void random_fill_matrix(float **A, const size_t A_rows, 
                           const size_t A_cols, int max);
-void randomly_fill_matrix_int(int **A, const size_t rows, 
+void random_fill_matrix_int(int **A, const size_t rows, 
                               const size_t cols, const int max);
-void randomly_fill_matrix_unsigned_int(unsigned int **A, const size_t rows, 
-                                       const size_t cols, const unsigned int max);
+void random_fill_matrix_unsigned_int(unsigned int **A, const size_t rows, 
+                                     const size_t cols, const unsigned int max);
 
 // Randomly fills matrix A with values sampled froma uniform distribution
-void randomly_fill_matrix_unif(float **A, const size_t rows, const size_t cols);
+void random_fill_matrix_unif(float **A, const size_t rows, const size_t cols);
+
+// Fills an array of length "size" with values from 0 to size - 1, or reversed.
+void sequential_fill_array_int(int *a, const size_t size, int reverse);
+
+void random_fill_array_unsigned_int(unsigned int *a, const size_t size, 
+                                    const unsigned int max);
 
 // Prints the content of a matrix in console
 void print_matrix(float **A, const size_t rows, const size_t cols);
