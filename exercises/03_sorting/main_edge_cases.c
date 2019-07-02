@@ -53,17 +53,17 @@ int main(int argc, char *argv[])
         }
 
         clock_gettime(CLOCK_REALTIME, &b_time);
-        quicksort(mat[3], i);
+        quicksort(mat[3], i, 0);
         clock_gettime(CLOCK_REALTIME, &e_time);
         q_time =  get_execution_time(b_time, e_time);
 
         clock_gettime(CLOCK_REALTIME, &b_time);
-        quicksort(mat[4], i);
+        quicksort(mat[4], i, i/2);
         clock_gettime(CLOCK_REALTIME, &e_time);
         qb_time =  get_execution_time(b_time, e_time);
 
         clock_gettime(CLOCK_REALTIME, &b_time);
-        quicksort(mat[5], i);
+        quicksort(mat[5], i, 0);
         clock_gettime(CLOCK_REALTIME, &e_time);
         qw_time =  get_execution_time(b_time, e_time);
 

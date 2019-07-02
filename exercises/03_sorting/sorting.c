@@ -56,9 +56,9 @@ void insertion_sort_int(int * array, size_t start, size_t size)
 
 /* QUICKSORT */
 
-int partition(int * array, size_t low, size_t high)
+int partition(int * array, size_t low, size_t high, size_t pivot_idx)
 {
-    size_t pivot = array[low];
+    size_t pivot = array[pivot_idx];
     int i = low - 1;
     int j = high + 1;
 
@@ -83,19 +83,19 @@ int partition(int * array, size_t low, size_t high)
     }
 }
 
-void quicksort_rec(int * array, size_t low, size_t high)
+void quicksort_rec(int * array, size_t low, size_t high, size_t central)
 {
     if(low < high)
     {
-        int pivot = partition(array, low, high);
-        quicksort_rec(array, low, pivot);
-        quicksort_rec(array, pivot + 1, high);
+        int pivot = central ? partition(array, low, high, (high + low) / 2) : partition(array, low, high, low);
+        quicksort_rec(array, low, pivot, central);
+        quicksort_rec(array, pivot + 1, high, central);
     }
 }
 
-void quicksort(int * array, size_t size)
+void quicksort(int * array, size_t size, size_t central)
 {
-    quicksort_rec(array, 0, size - 1);
+    quicksort_rec(array, 0, size - 1, central);
 }
 
 /* HEAPSORT */

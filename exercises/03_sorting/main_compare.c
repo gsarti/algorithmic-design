@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
         }
 
         clock_gettime(CLOCK_REALTIME, &b_time);
-        quicksort(mat[1], i);
+        quicksort(mat[1], i, 0);
         clock_gettime(CLOCK_REALTIME, &e_time);
         quick_time =  get_execution_time(b_time, e_time);
 
