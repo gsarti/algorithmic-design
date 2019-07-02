@@ -11,7 +11,7 @@
 #include "../utility.h"
 #include "sorting.h"
 
-#define MAX_SIZE 1000000000
+#define MAX_SIZE 20000000
 #define INSERTION_STOP 131072
 #define PRINT_STOP 10000000
 #define COUNTING_STOP 33554432
@@ -20,6 +20,7 @@
 int main(int argc, char *argv[]) 
 {
     struct timespec b_time, e_time;
+    double insert_time, quick_time, heap_time, count_time, radix_time, bucket_time;
     printf("Size\t\tInsertion\tQuick\t\tHeap\t\tCount\t\tRadix\t\tBucket\n");
     printf("----\t\t---------\t-----\t\t----\t\t-----\t\t-----\t\t------\n");
     for (size_t i = 256; i < MAX_SIZE; i *= 2) 
@@ -31,7 +32,9 @@ int main(int argc, char *argv[])
         float ** mat_unif = allocate_matrix(1, i);
         random_fill_matrix_unif(mat_unif, 1, i);
 
-        double insert_time, quick_time, heap_time, count_time, radix_time, bucket_time;
+        // Used to validate sorting results.
+        int * sorted = (int *)malloc(sizeof(int) * 6);
+
         if(i <= INSERTION_STOP)
         {
             clock_gettime(CLOCK_REALTIME, &b_time);
@@ -41,7 +44,7 @@ int main(int argc, char *argv[])
         }
 
         clock_gettime(CLOCK_REALTIME, &b_time);
-        quicksort(mat[1], i, 1);
+        quicksort(mat[1], i);
         clock_gettime(CLOCK_REALTIME, &e_time);
         quick_time =  get_execution_time(b_time, e_time);
 
@@ -93,9 +96,10 @@ int main(int argc, char *argv[])
         {
             printf("%d\t\t\t%lf\t%lf\n", i, quick_time, heap_time);
         }
-        
+
         deallocate_matrix((void **)mat, 5);
         deallocate_matrix((void **)mat_unif, 1);
+        free(sorted);
     }
     return 0;
 }

@@ -18,7 +18,7 @@ void insertion_sort(int * array, size_t size)
     for(size_t i = 1; i < size; i++)
     {
         j = i;
-        while (j > 1 && array[j] < array[j-1])
+        while (j > 0 && array[j] < array[j-1])
         {
             swap_int(&array[j-1], &array[j]);
             j--;
@@ -32,7 +32,7 @@ void insertion_sort_float(float * array, size_t start, size_t size)
     for(size_t i = start + 1; i < size; i++)
     {
         j = i;
-        while (j > 1 && array[j] < array[j-1])
+        while (j > start && array[j] < array[j-1])
         {
             swap(&array[j-1], &array[j]);
             j--;
@@ -46,7 +46,7 @@ void insertion_sort_int(int * array, size_t start, size_t size)
     for(size_t i = start + 1; i < size; i++)
     {
         j = i;
-        while (j > 1 && array[j] < array[j-1])
+        while (j > start && array[j] < array[j-1])
         {
             swap_int(&array[j-1], &array[j]);
             j--;
@@ -56,43 +56,46 @@ void insertion_sort_int(int * array, size_t start, size_t size)
 
 /* QUICKSORT */
 
-int partition(int * array, size_t low, size_t high, size_t pivot)
+int partition(int * array, size_t low, size_t high)
 {
-    swap_int(&array[low], &array[pivot]);
-    int i = low + 1;
-    int j = high - 1;
+    size_t pivot = array[low];
+    int i = low - 1;
+    int j = high + 1;
 
-    while(i <= j)
+    while(1)
     {
-        if(array[i] > array[low])
-        {
-            swap_int(&array[i], &array[j]);
-            --j;
-        }
-        else
+        do
         {
             ++i;
+        } while (array[i] < pivot);
+
+        do
+        {
+            j--;
+        } while (array[j] > pivot);
+        
+        if (i >= j)
+        {
+            return j;
         }
+        
+        swap_int(&array[i], &array[j]);
     }
-    swap_int(&array[low], &array[j]);
-    return j;
 }
 
-void quicksort_rec(int * array, size_t low, size_t high, int central_pivot)
+void quicksort_rec(int * array, size_t low, size_t high)
 {
     if(low < high)
     {
-        int pivot = central_pivot ?
-                    partition(array, low, high, (low + high) / 2) :
-                    partition(array, low, high, low);
-        quicksort_rec(array, low, pivot, central_pivot);
-        low = pivot + 1;
+        int pivot = partition(array, low, high);
+        quicksort_rec(array, low, pivot);
+        quicksort_rec(array, pivot + 1, high);
     }
 }
 
-void quicksort(int * array, size_t size, int central_pivot)
+void quicksort(int * array, size_t size)
 {
-    quicksort_rec(array, 0, size, central_pivot);
+    quicksort_rec(array, 0, size - 1);
 }
 
 /* HEAPSORT */
@@ -101,7 +104,7 @@ void heapsort(int * array, size_t size)
 {
     BinaryHeap H = build_heap(array, size, geq);
 
-    for (int i = size - 1; i > 0; i--)
+    for (int i = size - 1; i >= 0; i--)
     {
         swap_int(&(H.heap[root()]),&(H.heap[i]));
         H.size--;
@@ -135,40 +138,28 @@ void counting_sort(int * array, size_t size, size_t bound)
 
 /* RADIX SORT */
 
-unsigned int digit(unsigned int size, unsigned int pos)
-{
-	int x = pow(10, pos);
-	return ((size % (x * 10)) - (size % x)) / x;
-}
-
 void radix_sort(int * array, size_t size, size_t bound)
 {
-    unsigned digits_size = log10(bound);
-    for (size_t i = 0; i < digits_size; i++)
+    int max = max_array_int(array, size);
+    for (size_t i = 1; max / i > 0; i *= 10)
     {
-        unsigned int * a = (unsigned int *)malloc(sizeof(unsigned int) * size);
         int * c = (int *)calloc(10, sizeof(int));
         int * res = (int *)malloc(sizeof(int) * size);
 
         for (size_t j = 0; j < size; j++)
         {
-            a[j] = digit(array[j], i);
-        }
-        for (int i = 0; i < size; i++)
-        {
-            c[a[i]]++;
+            c[(array[j] / i) % 10]++;
         }
         for (int j = 1; j < 10; j++)
         {
             c[j] += c[j - 1];
         }
-        for (int i = size - 1; i >= 0; i--) 
+        for (int j = size - 1; j >= 0; j--) 
         {
-            res[c[a[i]] - 1] = array[i];
-            c[a[i]]--;
+            res[c[(array[j] / i) % 10] - 1] = array[j];
+            c[(array[j] / i) % 10]--;
         }
         copy_array_int(array, res, size);
-        free(a);
         free(c);
         free(res);
     }
@@ -196,7 +187,7 @@ void bucket_sort(float * array, size_t size)
 			}
 		    insertion_sort_float(array, i - B[j].length, B[j].length);
 		}
-	}
+    }
 	free_bucket(B, size);  
 }
 
@@ -257,7 +248,7 @@ int select_pivot(int * array, size_t low, size_t high)
 int selection(int * array, size_t low, size_t high, size_t i)
 {
     int j = select_pivot(array, low, high);
-    int k = partition_rep(array, low, high, j);
+    int k = partition_balanced(array, low, high, j);
     
     if(i == k)
     {

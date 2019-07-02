@@ -100,6 +100,10 @@ void print_array_int(int *a, const size_t n);
 // Find the max value in an int array of size "size"
 int max_array_int(int* array, size_t size);
 
+// 1 If the array is sorted ascendently, 0 otherwise.
+int check_sorted(float * array, size_t size);
+int check_sorted_int(int * array, size_t size);
+
 /**
  * @brief Get the execution time in seconds.
  * @param    b_time  Beginning time object.

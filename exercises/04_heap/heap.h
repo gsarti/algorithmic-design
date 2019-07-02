@@ -47,11 +47,14 @@ int heap_min(BinaryHeap H);
 // Restores the heap property, auxiliary to build_heap.
 void heapify(BinaryHeap H, int i);
 
+// Removes node at position i in the heap.
+void remove_node(BinaryHeap * H, int i);
+
 // Decreases the key at index i setting it to val, based on comp.
 void heap_decrease_key(BinaryHeap H, int i, int val);
 
 // Inserts a new value in the heap.
-void heap_insert(BinaryHeap H, int val);
+void heap_insert(BinaryHeap * H, int val);
 
 /* Extra methods */
 

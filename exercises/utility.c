@@ -287,7 +287,7 @@ void print_array(float *a, const size_t n)
     printf("\n");
     for(int i = 0; i < n; i++)
     {
-        printf("%f, ", a[i]);
+        printf("%d: %f\n", i, a[i]);
     }
 }
 
@@ -309,7 +309,7 @@ void print_array_int(int *a, const size_t n)
     printf("\n");
     for(int i = 0; i < n; i++)
     {
-        printf("%d, ", a[i]);
+        printf("%d: %d\n", i, a[i]);
     }
 }
 
@@ -325,6 +325,30 @@ int max_array_int(int* array, size_t size)
     }
     return max;
 }
+
+int check_sorted(float * array, size_t size)
+{
+    if(size == 1 || size == 0)
+        return 1;
+
+    if (array[size - 1] < array[size - 2])
+        return 0;
+
+    return check_sorted(array, size - 1);
+}
+
+int check_sorted_int(int * array, size_t size)
+{
+    if(size == 1 || size == 0)
+        return 1;
+
+    if(array[size - 1] < array[size - 2])
+        return 0;
+
+    return check_sorted_int(array, size - 1);
+}
+
+
 
 double get_execution_time(const struct timespec b_time,
                           const struct timespec e_time)
