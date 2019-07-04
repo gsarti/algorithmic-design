@@ -24,11 +24,11 @@ typedef struct BinaryHeap
 
 // Ctor and dtor for the heap structure.
 BinaryHeap build_heap(int * a, size_t size_a, int (*fcomp)(int,int));
-void free_heap(BinaryHeap H);
+void free_heap(BinaryHeap * H);
 
 // Returns the root node and the last node of the heap.
 int root();
-int last(BinaryHeap H);
+int last(BinaryHeap * H);
 
 // Return the index of left/right child/parent of i-th node.
 int left(int i);
@@ -39,19 +39,22 @@ int parent(int i);
 int is_root(int i);
 
 // True if index i is present in the heap, false otherwise.
-int is_valid(BinaryHeap H, int i);
+int is_valid(BinaryHeap * H, int i);
 
 // Returns the value of the root node for the heap.
-int heap_min(BinaryHeap H);
+int heap_min(BinaryHeap * H);
+
+// Swaps elements at indices i, m of heap H.
+void heap_swap(BinaryHeap * H, size_t i, size_t m);
 
 // Restores the heap property, auxiliary to build_heap.
-void heapify(BinaryHeap H, int i);
+void heapify(BinaryHeap * H, int i);
 
-// Removes node at position i in the heap.
-void remove_node(BinaryHeap * H, int i);
+// Pops the smallest node in the heap.
+int remove_min(BinaryHeap * H);
 
 // Decreases the key at index i setting it to val, based on comp.
-void heap_decrease_key(BinaryHeap H, int i, int val);
+void heap_decrease_key(BinaryHeap * H, int i, int val);
 
 // Inserts a new value in the heap.
 void heap_insert(BinaryHeap * H, int val);
@@ -59,6 +62,6 @@ void heap_insert(BinaryHeap * H, int val);
 /* Extra methods */
 
 // Prints a heap, for debugging purposes.
-void heap_print(BinaryHeap H);
+void heap_print(BinaryHeap * H);
 
 #endif //HEAP_H__

@@ -13,16 +13,16 @@
 BinaryHeap build_heap(int * a, size_t size_a, int (*fcomp)(int,int))
 {
     BinaryHeap H = {H.heap = a, H.size = size_a, H.comp = fcomp};
-    for (int i = size_a; i >= 0; i--)
+    for (int i = parent(last(&H)); i >= 0; i--)
     {
-        heapify(H, i);
+        heapify(&H, i);
     }
     return H;
 }
 
-void free_heap(BinaryHeap H) 
+void free_heap(BinaryHeap * H) 
 { 
-    free(H.heap); 
+    free(H->heap); 
 }
 
 int root()
@@ -30,9 +30,9 @@ int root()
     return 0; 
 }
 
-int last(BinaryHeap H) 
+int last(BinaryHeap * H) 
 { 
-    return H.size - 1;
+    return H->size - 1;
 }
 
 int left(int i) 
@@ -55,75 +55,82 @@ int is_root(int i)
     return i == root();
 }
 
-int is_valid(BinaryHeap H, int i) 
+int is_valid(BinaryHeap * H, int i) 
 { 
-    return H.size >= i;
+    return H->size > i;
 }
 
-int heap_min(BinaryHeap H) 
+int heap_min(BinaryHeap * H) 
 { 
-    return H.heap[root()];
+    return H->heap[root()];
 }
 
-void heapify(BinaryHeap H, int i)
+void heap_swap(BinaryHeap * H, size_t i, size_t m)
 {
+  int tmp = H->heap[i];
+  H->heap[i] = H->heap[m];
+  H->heap[m] = tmp;
+}
+
+void heapify(BinaryHeap * H, int i)
+{
+    int val = -1;
+    int m = i;
+
     // Left and right child
     int lc, rc;
-    int val;
 
-    while(i < H.size)
+    while(m != val)
     {
-        rc = right(i);
-        lc = left(i);
-        val = is_valid(H, lc) && H.comp(H.heap[lc], H.heap[i]) ? lc : i;
-	    val = is_valid(H, rc) && H.comp(H.heap[rc], H.heap[val]) ? rc : val;
+        val = m;
+        rc = right(val);
+        lc = left(val);
+        m = is_valid(H, lc) && H->comp(H->heap[lc], H->heap[m]) ? lc : m;
+	    m = is_valid(H, rc) && H->comp(H->heap[rc], H->heap[m]) ? rc : m;
 
-        if(val != i)
+        if(m != val)
         {
-            swap_int(&(H.heap[i]), &(H.heap[val]));
-            i = val;
-        }
-        else
-        {
-            break;
+            heap_swap(H, m, val);
         }
     }
 }
 
-void heap_decrease_key(BinaryHeap H, int i, int val)
+void heap_decrease_key(BinaryHeap * H, int i, int val)
 {
-    if(H.comp(H.heap[i], val))
+    if(H->comp(H->heap[i], val))
     {
         printf("Error: %d should be smaller than the selected element %d", 
-               (val, H.heap[i]));
+               (val, H->heap[i]));
     }
 
-    H.heap[i] = val;
-    while(!is_root(i) && H.comp(H.heap[i], H.heap[parent(i)]))
+    H->heap[i] = val;
+    while(!(is_root(i) || H->comp(H->heap[i], H->heap[parent(i)])))
     {
-        swap_int(&(H.heap[i]), &(H.heap[parent(i)]));
+        heap_swap(H, i, parent(i));
         i = parent(i);
     }
 }
 
-void remove_node(BinaryHeap * H, int i)
+int remove_min(BinaryHeap * H)
 {
-    swap_int(&(H->heap[root()]),&(H->heap[i]));
+    int min = H->heap[root()];
+    H->heap[root()] = H->heap[last(H)];
     H->size--;
-    heapify(*H, root());
+    heapify(H, root());
+    return min;
 }
 
 void heap_insert(BinaryHeap * H, int val)
 {
     H->size++;
-    H->heap[last(*H)] = INT_MAX;
-    heap_decrease_key(*H, last(*H), val);
+    H->heap[last(H)] = INT_MAX;
+    heap_decrease_key(H, last(H), val);
 }
 
-void heap_print(BinaryHeap H)
+void heap_print(BinaryHeap * H)
 {
     printf("\nPrinting Heap with root value: %d", heap_min(H));
-    for(int i = 1; i < H.size; i++)
-        printf(", %d", H.heap[i]);
+    for(int i = 1; i < H->size; i++)
+        printf(", %d", H->heap[i]);
     printf("\n");
 }

@@ -20,6 +20,7 @@
 void insertion_sort(int * array, size_t size);
 void insertion_sort_float(float * array, size_t start, size_t size);
 void insertion_sort_int(int * array, size_t start, size_t size);
+void insertion_sort_vector(Vector * v);
 
 /* QUICKSORT */
 

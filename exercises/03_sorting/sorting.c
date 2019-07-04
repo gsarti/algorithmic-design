@@ -54,6 +54,41 @@ void insertion_sort_int(int * array, size_t start, size_t size)
     }
 }
 
+void insertion_sort_vector(Vector * v)
+{
+    if (v->root == NULL || v->root->next == NULL)
+    {
+        return;
+    }
+    Node * temp1 = v->root->next;
+    while(temp1 != NULL)
+    {
+        float val = temp1->val;
+        int found = 0;
+        Node * temp2 = v->root;
+        while (temp2 != temp1)
+        {
+            if(temp2->val > temp1->val && !found)
+            {
+                val = temp2->val;
+                temp2->val = temp1->val;
+                found = 1;
+            }
+            else
+            {
+                if(found)
+                {
+                    swap(&(val), &(temp2->val));
+                }
+            }
+            temp2 = temp2->next;
+        }
+        temp2->val = val;
+        temp1 = temp1->next;
+    }
+}
+
+
 /* QUICKSORT */
 
 int partition(int * array, size_t low, size_t high, size_t pivot_idx)
@@ -103,12 +138,9 @@ void quicksort(int * array, size_t size, size_t central)
 void heapsort(int * array, size_t size)
 {
     BinaryHeap H = build_heap(array, size, geq);
-
-    for (int i = size - 1; i >= 0; i--)
+    for (int i = size - 1; i >= 1; i--)
     {
-        swap_int(&(H.heap[root()]),&(H.heap[i]));
-        H.size--;
-        heapify(H, root());
+        array[i] = remove_min(&H);
     }
 }
 
@@ -175,17 +207,17 @@ void bucket_sort(float * array, size_t size)
     {
         append(&B[(int)(array[i] * size)], array[i]);
     }
-
+    for (size_t i = 0; i < size; i++)
+    {
+        insertion_sort_vector(&B[i]);
+    }
+    int idx = 0;
     for(size_t i = 0; i < size; i++)
 	{
-		for(size_t j = 0; j < size; j++)
+		for(size_t j = 0; j < B[i].length; j++)
 		{
-			for(int k = B[j].length-1 ; k >= 0; k--)
-			{
-				array[i] = get_val(B[j], k);
-				i++;
-			}
-		    insertion_sort_float(array, i - B[j].length, B[j].length);
+            array[idx] = get_val(B[i], j);
+            idx++;
 		}
     }
 	free_bucket(B, size);  
