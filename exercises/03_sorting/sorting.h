@@ -9,6 +9,8 @@
 
 #include <stdio.h>
 
+#include "vector.h"
+
 /* INSERTION SORT */
 
 /**
