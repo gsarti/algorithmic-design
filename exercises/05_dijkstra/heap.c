@@ -10,20 +10,19 @@
 #include "heap.h"
 #include "../utility.h"
 
-NodeHeap * heap_build(GraphNode * a, size_t size_a, int (*fcomp)(int,int))
+NodeHeap heap_build(NodeVector V, size_t size, int (*fcomp)(int,int))
 {
-    GraphNode ** nodes = (GraphNode **)malloc(sizeof(GraphNode *) * size_a);
-    for (size_t i = 0; i < size_a; i++)
+    GraphNode ** nodes = (GraphNode **)malloc(sizeof(GraphNode *) * size);
+    for (size_t i = 0; i < size; i++)
     {
-        a[i].pos = i;
-        nodes[i] = &(a[i]);
+        V.nodes[i]->pos = i;
+        nodes[i] = V.nodes[i];
     }
-    NodeHeap H = {H.size = size_a, H.comp = fcomp, H.nodes = nodes};
-    for (int i = parent(last(&H)); i >= 0; i--)
-    {
-        heapify(&H, i);
-    }
-    return &H;
+    NodeHeap H;
+    H.nodes = nodes;
+    H.size = size;
+    H.comp = fcomp;
+    return H;
 }
 
 void heap_free(NodeHeap * H)
@@ -78,6 +77,9 @@ GraphNode * heap_min(NodeHeap * H)
 
 void heap_swap(NodeHeap * H, size_t a, size_t b)
 {
+    int temp = H->nodes[a]->pos;
+    H->nodes[a]->pos = H->nodes[b]->pos;
+    H->nodes[b]->pos = temp;
     node_swap(H->nodes[a], H->nodes[b]);
 }
 
@@ -94,8 +96,8 @@ void heapify(NodeHeap * H, int i)
         val = m;
         rc = right(val);
         lc = left(val);
-        m = is_valid(H, lc) && H->comp(H->nodes[lc]->dist, H->nodes[m]->dist) ? lc : m;
-	    m = is_valid(H, rc) && H->comp(H->nodes[rc]->dist, H->nodes[m]->dist) ? rc : m;
+        m = heap_is_valid(H, lc) && H->comp(H->nodes[lc]->dist, H->nodes[m]->dist) ? lc : m;
+	    m = heap_is_valid(H, rc) && H->comp(H->nodes[rc]->dist, H->nodes[m]->dist) ? rc : m;
 
         if(m != val)
         {
@@ -109,7 +111,6 @@ GraphNode * heap_pop_min(NodeHeap * H)
     GraphNode * min = H->nodes[root()];
     H->nodes[root()] = H->nodes[last(H)];
     H->size--;
-    heapify(H, root());
     return min;
 }
 
@@ -125,7 +126,9 @@ void heap_decrease_key(NodeHeap * H, int i, int val)
 
 void heap_relax(NodeHeap * H, GraphNode * a, GraphNode * b, int d)
 {
-    if (a->dist + d < b->dist)
+    size_t a_dist = a->dist + d;
+    size_t b_dist = b->dist;
+    if (a_dist < b_dist)
     {
         heap_decrease_key(H, b->pos, a->dist + d);
         b->pred = a;

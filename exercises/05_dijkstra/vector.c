@@ -5,21 +5,56 @@
  */
 
 #include <stdio.h>
+#include <limits.h>
 
 #include "vector.h"
 
-NodeVector * vector_build(GraphNode * a, int size)
+GraphNode * node_build(GraphNode * n, int id)
+{
+    if(n == NULL)
+    {
+        n = (GraphNode *)malloc(sizeof(GraphNode));
+    }
+    n->dist = INT_MAX; 
+    n->idx = id;
+    n->pred = NULL;
+    n->pos = -1;
+    return n;
+}
+
+void node_swap(GraphNode * a, GraphNode * b)
+{
+    GraphNode tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void node_print(GraphNode * n)
+{
+    printf("\nIdx: %d, Dist: %d, Pos: %d", n->idx, n->dist, n->pos);
+    if(n->pred != NULL)
+        printf(", Pred Idx: %d\n", n->pred->idx);
+    else
+        printf(", No Pred\n");
+}
+
+NodeVector vector_build(GraphNode * a, int size)
 {
     GraphNode ** nodes = (GraphNode **)malloc(sizeof(GraphNode *) * size);
-    if(a != NULL)
+    
+    for (size_t i = 0; i < size; i++)
     {
-        for (size_t i = 0; i < size; i++)
+        if(a != NULL)
         {
-            nodes[i] = &(a[i]);
+            nodes[i] = &a[i];
         }
+        else
+        {
+            nodes[i] = node_build(NULL, i);
+        } 
     }
     NodeVector V = {V.length = size, V.nodes = nodes};
-    return &V;
+    return V;
 }
 
 void vector_free(NodeVector * V)

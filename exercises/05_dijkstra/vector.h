@@ -9,7 +9,12 @@
 
 #include <stdlib.h>
 
-#include "graph.h"
+typedef struct GraphNode {
+  int dist;
+  int idx;
+  struct GraphNode *pred;
+  int pos;
+} GraphNode;
 
 /**
  * @brief A Vector of Nodes
@@ -19,11 +24,18 @@
 typedef struct NodeVector
 {
     size_t length;
-    struct GraphNode ** nodes;
+    GraphNode ** nodes;
 } NodeVector;
 
+// Ctor
+GraphNode * node_build(GraphNode * n, int id);
+
+void node_swap(GraphNode * a, GraphNode * b);
+
+void node_print(GraphNode * n);
+
 // Ctor and dtor for vector
-NodeVector * vector_build(GraphNode * a, int size);
+NodeVector vector_build(GraphNode * a, int size);
 void vector_free(NodeVector * V);
 
 int vector_is_empty(NodeVector * V);

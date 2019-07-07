@@ -17,6 +17,9 @@ sorting:
 heap:
 	$(CC) $(OPT) 04_heap/main.c 04_heap/heap.c utility.c -o heap.x
 
+dijkstra:
+	$(CC) -g 05_dijkstra/main.c 05_dijkstra/vector.c 05_dijkstra/heap.c 05_dijkstra/graph.c 05_dijkstra/dijkstra.c utility.c -o dijkstra.x
+
 clean: 
 	@rm *.x
 
