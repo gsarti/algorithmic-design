@@ -3,9 +3,9 @@
 
 #include "graph.hpp"
 
-void swap(std::vector<Node>, int a, int b);
+void swap(std::vector<Node>& array, int a, int b);
 
-int get_min(std::vector<Node>, int start, int size);
+int get_min(std::vector<Node> array, int start, int size);
 
 double get_execution_time(const struct timespec b_time,
                           const struct timespec e_time);

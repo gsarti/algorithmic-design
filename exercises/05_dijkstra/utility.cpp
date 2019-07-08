@@ -1,6 +1,6 @@
 #include "utility.hpp"
 
-void swap(std::vector<Node> array, int a, int b)
+void swap(std::vector<Node>& array, int a, int b)
 {
     Node temp = array[a];
     array[a] = array[b];
@@ -9,16 +9,16 @@ void swap(std::vector<Node> array, int a, int b)
 
 int get_min(std::vector<Node> array, int id, int size)
 {
-    int min = array[id].weight();
+    int min = array[id].edge.second;
     for (size_t i = id; i < size; i++)    
     {
-        if(array[i].dest() < min)
+        if(*(array[i].edge.first) < min)
         {
-            min = array[i].weight();
+            min = array[i].edge.second;
         }
     }
     swap(array, min, id);
-    return array[id].weight();
+    return array[id].edge.second;
 }
 
 double get_execution_time(const struct timespec b_time,

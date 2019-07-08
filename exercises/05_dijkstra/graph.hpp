@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <limits>
+#include <memory>
 
 #define INT_MAX std::numeric_limits<int>::max()
 
@@ -12,18 +13,15 @@ enum Color { White = 0, Grey = 1, Black = 2 };
 
 struct Node
 {
-    std::pair<int, int> edge;
+    std::pair<int *, int> edge;
 
-    Node() : edge{std::make_pair(0, 0)} {}
+    Node() : edge{std::make_pair(new int(0), 0)} {}
 
     Node(int dest, int weight) : 
-        edge{std::make_pair(dest, weight)} {};
-    
-    int& dest() { return edge.first; }
-    int& weight() { return edge.second; }
+        edge{std::make_pair(new int(dest), weight)} {};
 
-    void set_dest(int val) { edge.first = val; }
-    void set_weight(int val) { edge.second = val; }
+    Node(const Node& n) : 
+        edge{n.edge} {}
 };
 
 class Graph

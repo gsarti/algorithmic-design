@@ -20,9 +20,9 @@ int Graph::get_weigth(int a, int b)
     std::vector<Node> nodes = adjacents[a];
     for (auto node : nodes)
     {
-        if (node.dest() == b)
+        if (*(node.edge.first) == b)
         {
-            return node.weight();
+            return node.edge.second;
         }
     }
     return -1;
@@ -41,9 +41,9 @@ std::vector<Node> Graph::get_edges(int node_id)
 std::vector<int> Graph::get_neighbours(int node_id)
 {
     std::vector<int> neigh{};
-    for(auto edge: get_edges(node_id))
+    for(auto node: get_edges(node_id))
     {
-        neigh.push_back(edge.dest());
+        neigh.push_back(*(node.edge.first));
     }
     return neigh;
 }

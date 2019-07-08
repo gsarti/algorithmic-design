@@ -35,8 +35,8 @@ void dijkstra_array(Graph& G, int src)
     std::vector<Node> adj(G.get_adjacent_size());
     for (size_t i = 0; i < G.get_adjacent_size(); i++)
     {
-        adj[i].set_dest(dist[i]);
-        adj[i].set_weight(i);
+        adj[i].edge.first = &dist[i];
+        adj[i].edge.second = i;
     }
     while(idx < G.get_adjacent_size())
     {
@@ -58,8 +58,8 @@ void dijkstra_heap(Graph& G, int src)
     std::vector<Node> adj(G.get_adjacent_size());
     for (size_t i = 0; i < G.get_adjacent_size(); i++)
     {
-        adj[i].set_dest(dist[i]);
-        adj[i].set_weight(i);
+        adj[i].edge.first = &dist[i];
+        adj[i].edge.second = i;
     }
     Heap<std::less_equal<int>> H = Heap<std::less_equal<int>>(adj);
     while(H.get_size() != 0)

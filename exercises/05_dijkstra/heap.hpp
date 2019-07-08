@@ -84,7 +84,7 @@ int Heap<TComp>::get_size()
 template <class TComp>
 int Heap<TComp>::heap_min()
 {
-    return root().weight();
+    return root().edge.second;
 }
 
 template <class TComp>
@@ -95,14 +95,13 @@ void Heap<TComp>::heapify(int i)
 
     // Left and right child
     int lc, rc;
-    print();
     while(m != val)
     {
         val = m;
         rc = RIGHT(val);
         lc = LEFT(val);
-        m = lc < get_size() && comp(left(val).dest(), array[m].dest()) ? lc : m;
-	    m = rc < get_size() && comp(right(val).dest(), array[m].dest()) ? rc : m;
+        m = lc < get_size() && comp(*(left(val).edge.first), *(array[m].edge.first)) ? lc : m;
+	    m = rc < get_size() && comp(*(right(val).edge.first), *(array[m].edge.first)) ? rc : m;
 
         if(m != val)
         {
@@ -123,9 +122,8 @@ int Heap<TComp>::pop_min()
 template <class TComp>
 void Heap<TComp>::decrease_key(int i, int val)
 {
-    int d = array[i].dest();
-    d = val;
-    while(i != 0 && comp(d, parent(i).dest()))
+    *(array[i].edge.first) = val;
+    while(i != 0 && comp(*(array[i].edge.first), *(parent(i).edge.first)))
     {
         swap(array, i, PARENT(i));
         i = PARENT(i);
@@ -144,7 +142,7 @@ void Heap<TComp>::print()
 {
     std::cout << "Printing Heap with root value: " << heap_min() << std::endl;
     for(auto node : array)
-        std::cout << node.dest() << ", " << node.weight() << std::endl;
+        std::cout << *(node.edge.first) << ", " << node.edge.second << std::endl;
     std::cout << std::endl;
 }
 
