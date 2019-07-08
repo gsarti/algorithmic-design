@@ -1,4 +1,5 @@
 CC = gcc
+C++ = g++
 OPT = -O4
 
 all: strassen chain_mult sorting heap
@@ -18,7 +19,7 @@ heap:
 	$(CC) $(OPT) 04_heap/main.c 04_heap/heap.c utility.c -o heap.x
 
 dijkstra:
-	$(CC) -g 05_dijkstra/main.c 05_dijkstra/vector.c 05_dijkstra/heap.c 05_dijkstra/graph.c 05_dijkstra/dijkstra.c utility.c -o dijkstra.x
+	$(C++) -g 05_dijkstra/main.cpp 05_dijkstra/utility.cpp 05_dijkstra/heap.hpp 05_dijkstra/graph.cpp 05_dijkstra/dijkstra.cpp -o dijkstra.x
 
 clean: 
 	@rm *.x
