@@ -1,3 +1,9 @@
+/**
+ * @author Gabriele Sarti (gabriele.sarti996@gmail.com)
+ * @brief Graph class for Dijkstra's algorithm - Header
+ * @date 05-07-2019
+ */
+
 #ifndef GRAPH_H__
 #define GRAPH_H__
 
@@ -7,49 +13,67 @@
 #include <limits>
 #include <memory>
 
+// Used as INFINITY in Dijkstra's pseudocode.
 #define INT_MAX std::numeric_limits<int>::max()
 
-enum Color { White = 0, Grey = 1, Black = 2 };
-
-struct Node
+/**
+ * @brief An Edge structure used for Heap and Graph
+ * @var  edge  The pair made by a pointer to a
+ *             node and the weight of the edge.
+ */
+struct Edge
 {
     std::pair<int *, int> edge;
 
-    Node() : edge{std::make_pair(new int(0), 0)} {}
+    Edge() : edge{std::make_pair(new int(0), 0)} {}
 
-    Node(int dest, int weight) : 
+    Edge(int dest, int weight) : 
         edge{std::make_pair(new int(dest), weight)} {};
-
-    Node(const Node& n) : 
-        edge{n.edge} {}
 };
 
+/**
+ * @brief  Graph class used to model a graph through
+ *         a adjacency matrix of Edge objects.
+ * @var  predecessors  Predecessors of each Edge.
+ * @var  distances     Distances of each Edge from start.
+ * @var  adjacents     Adjacency matrix of Edge objects.
+ */
 class Graph
 {
 private:
-    std::vector<Color> colors;
     std::vector<int> predecessors;
     std::vector<int> distances;
-    std::vector<std::vector<Node>> adjacents;
+    std::vector<std::vector<Edge>> adjacents;
 
 public:
-    Color get_color(int node_id);
-    int get_predecessor(int node_id);
-    int get_distance(int node_id);
+    // Getter for predecessor of a node.
+    int get_predecessor(int node);
+
+    // Getter for distance of a node from start.
+    int get_distance(int node);
+
+    // Getter for weight of the edge between two nodes.
     int get_weigth(int a, int b);
-    int get_adjacent_size();
-    std::vector<Node> get_edges(int node_id);
-    std::vector<int> get_neighbours(int node_id);
+    
+    // Gets the size of Graph in terms of Edges.
+    int size();
 
-    std::vector<Color>& get_colors();
-    std::vector<int>& get_predecessors();
+    // Get all the edges connected to a node.
+    std::vector<Edge> get_edges(int node);
+
+    // Get all neighbours nodes of a node.
+    std::vector<int> get_neighbours(int node);
+
+    // Get the distances vector.
     std::vector<int>& get_distances();
-    std::vector<std::vector<Node>>& get_adjacents();
 
-    void set_color(int node_id, Color color);
-    void set_predecessor(int node_id, int pred);
-    void set_distance(int node_id, int dist);
+    // Sets the predecessor of node to pred.
+    void set_predecessor(int node, int pred);
 
+    // Sets the distance of node from start to dist.
+    void set_distance(int node, int dist);
+
+    // Add a new edge to the Graph.
     void insert_edge(int src, int dest, int weight);
 };
 

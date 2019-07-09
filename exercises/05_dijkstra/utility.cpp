@@ -1,24 +1,34 @@
+/**
+ * @author Gabriele Sarti (gabriele.sarti996@gmail.com)
+ * @brief Utility methods for the Dijkstra assignment - Source
+ * @date 07-07-2019
+ */
+
 #include "utility.hpp"
 
-void swap(std::vector<Node>& array, int a, int b)
+void swap(std::vector<Edge>& array, int a, int b)
 {
-    Node temp = array[a];
+    Edge temp = array[a];
     array[a] = array[b];
     array[b] = temp;
 }
 
-int get_min(std::vector<Node> array, int id, int size)
+int pop_min(std::vector<Edge>& array)
 {
-    int min = array[id].edge.second;
-    for (size_t i = id; i < size; i++)    
+    int min = *(array[0].edge.first);
+    int idx = 0, pos = 0;
+    for (size_t i = 1; i < array.size(); i++)    
     {
         if(*(array[i].edge.first) < min)
         {
-            min = array[i].edge.second;
+            min = *(array[i].edge.first);
+            idx = i;
         }
     }
-    swap(array, min, id);
-    return array[id].edge.second;
+    pos = array[idx].edge.second;
+    swap(array, idx, array.size() - 1);
+    array.pop_back();
+    return pos;
 }
 
 double get_execution_time(const struct timespec b_time,

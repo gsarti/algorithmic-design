@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 /**
- * @brief A Node of a Vector
+ * @brief A Vector Node
  * @var val   The float value of the node.
  * @var next  The next node in the vector.
  */

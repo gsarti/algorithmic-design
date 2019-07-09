@@ -1,6 +1,7 @@
 /**
  * @author Gabriele Sarti (gabriele.sarti996@gmail.com)
- * @brief PairHeap structure to store Graph pairs - Headers
+ * @brief Heap structure used to store Edges of a Graph
+ *        Header & Source (Templated Class)
  * @date 05-07-2019
  */
 
@@ -14,63 +15,91 @@
 #include "utility.hpp"
 #include "graph.hpp"
 
+// Idx of the base Edge inside the heap.
 #define ROOT 0
+
+// Idx of the left child of Edge i.
 #define LEFT(i) 2 * i + 1
+
+// Idx of the right child of Edge i.
 #define RIGHT(i) 2 * i + 2
+
+// Idx of the parent of Edge i.
 #define PARENT(i) (i - 1) / 2
 
-template <class TComp = std::less<int>>
+/**
+ * @brief Heap structure to store adjacency vectors for each node.
+ * @tparam  The heap can be templated with a comparison operator.
+ *          std::less_equal<int> is used as default (min heap).
+ * @var  array  The adjacency vector of Edge objects.
+ * @var  comp   The comparison operator used for the heap property.  
+ */
+template <class TComp = std::less_equal<int>>
 class Heap
 {
 private:
-    std::vector<Node> array;
+    std::vector<Edge> array;
 
 public:
     TComp comp;
 
-    Heap(std::vector<Node>& array, TComp c = TComp{}) 
+    Heap(std::vector<Edge>& array, TComp c = TComp{}) 
         : array{array}, comp{c} {}
 
-    Node& root();
-    Node& last();
-    Node& left(int i);
-    Node& right(int i);
-    Node& parent(int i);
+    // Get the root Edge of the array.
+    Edge& root();
+
+    // Get the last Edge of the array.
+    Edge& last();
+
+    // Get the left Edge of the i-th Edge.
+    Edge& left(int i);
+
+    // Get the right Edge of the i-th Edge.
+    Edge& right(int i);
+
+    // Get the parent Edge of the i-th Edge.
+    Edge& parent(int i);
+
+    // Get the heap size;
     int get_size();
+
+    // Get the weight of the root Edge in the heap.
     int heap_min();
+
+    // Restores the heap property for edges.
     void heapify(int i);
+
+    // Removes the root Edge from the heap and returns its weight.
     int pop_min();
-    void decrease_key(int i, int val);
-    void insert(int val);
-    void print();
 };
 
 template <class TComp>
-Node& Heap<TComp>::root()
+Edge& Heap<TComp>::root()
 {
     return array[ROOT];
 }
 
 template <class TComp>
-Node& Heap<TComp>::last()
+Edge& Heap<TComp>::last()
 {
     return array[get_size() - 1];
 }
 
 template <class TComp>
-Node& Heap<TComp>::left(int i)
+Edge& Heap<TComp>::left(int i)
 {
     return array[LEFT(i)];
 }
 
 template <class TComp>
-Node& Heap<TComp>::right(int i)
+Edge& Heap<TComp>::right(int i)
 {
     return array[RIGHT(i)];
 }
 
 template <class TComp>
-Node& Heap<TComp>::parent(int i)
+Edge& Heap<TComp>::parent(int i)
 {
     return array[PARENT(i)];
 }
@@ -117,33 +146,6 @@ int Heap<TComp>::pop_min()
     array[ROOT] = last();
     array.pop_back();
     return min;
-}
-
-template <class TComp>
-void Heap<TComp>::decrease_key(int i, int val)
-{
-    *(array[i].edge.first) = val;
-    while(i != 0 && comp(*(array[i].edge.first), *(parent(i).edge.first)))
-    {
-        swap(array, i, PARENT(i));
-        i = PARENT(i);
-    }
-}
-
-template <class TComp>
-void Heap<TComp>::insert(int val)
-{
-    array.push_back(Node{INT_MAX, -1});
-    decrease_key(get_size() - 1, val);
-}
-
-template <class TComp>
-void Heap<TComp>::print()
-{
-    std::cout << "Printing Heap with root value: " << heap_min() << std::endl;
-    for(auto node : array)
-        std::cout << *(node.edge.first) << ", " << node.edge.second << std::endl;
-    std::cout << std::endl;
 }
 
 #endif //HEAP_H

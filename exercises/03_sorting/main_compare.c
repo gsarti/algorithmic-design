@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
         count_time =  get_execution_time(b_time, e_time);
 
         clock_gettime(CLOCK_REALTIME, &b_time);
-        radix_sort(mat[4], i, max_array_int(mat[4], i));
+        radix_sort(mat[4], i);
         clock_gettime(CLOCK_REALTIME, &e_time);
         radix_time =  get_execution_time(b_time, e_time);
         

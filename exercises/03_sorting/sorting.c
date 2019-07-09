@@ -170,7 +170,7 @@ void counting_sort(int * array, size_t size, size_t bound)
 
 /* RADIX SORT */
 
-void radix_sort(int * array, size_t size, size_t bound)
+void radix_sort(int * array, size_t size)
 {
     int max = max_array_int(array, size);
     for (size_t i = 1; max / i > 0; i *= 10)

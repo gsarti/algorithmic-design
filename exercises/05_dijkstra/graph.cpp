@@ -1,23 +1,24 @@
+/**
+ * @author Gabriele Sarti (gabriele.sarti996@gmail.com)
+ * @brief Graph class for Dijkstra's algorithm - Source
+ * @date 05-07-2019
+ */
+
 #include "graph.hpp"
 
-Color Graph::get_color(int node_id)
+int Graph::get_predecessor(int node)
 {
-    return colors[node_id];
+    return predecessors[node];
 }
 
-int Graph::get_predecessor(int node_id)
+int Graph::get_distance(int node)
 {
-    return predecessors[node_id];
-}
-
-int Graph::get_distance(int node_id)
-{
-    return distances[node_id];
+    return distances[node];
 }
 
 int Graph::get_weigth(int a, int b)
 {
-    std::vector<Node> nodes = adjacents[a];
+    std::vector<Edge> nodes = adjacents[a];
     for (auto node : nodes)
     {
         if (*(node.edge.first) == b)
@@ -28,34 +29,24 @@ int Graph::get_weigth(int a, int b)
     return -1;
 }
 
-int Graph::get_adjacent_size()
+int Graph::size()
 {
     return adjacents.size();
 }
 
-std::vector<Node> Graph::get_edges(int node_id)
+std::vector<Edge> Graph::get_edges(int node)
 {
-    return adjacents[node_id];
+    return adjacents[node];
 }
 
-std::vector<int> Graph::get_neighbours(int node_id)
+std::vector<int> Graph::get_neighbours(int node)
 {
     std::vector<int> neigh{};
-    for(auto node: get_edges(node_id))
+    for(auto node: get_edges(node))
     {
         neigh.push_back(*(node.edge.first));
     }
     return neigh;
-}
-
-std::vector<Color>& Graph::get_colors()
-{
-    return colors;
-}
-
-std::vector<int>& Graph::get_predecessors()
-{
-    return predecessors;
 }
 
 std::vector<int>& Graph::get_distances()
@@ -63,24 +54,14 @@ std::vector<int>& Graph::get_distances()
     return distances;
 }
 
-std::vector<std::vector<Node>>& Graph::get_adjacents()
+void Graph::set_predecessor(int node, int pred)
 {
-    return adjacents;
+    predecessors[node] = pred;
 }
 
-void Graph::set_color(int node_id, Color color)
+void Graph::set_distance(int node, int dist)
 {
-    colors[node_id] = color;
-}
-
-void Graph::set_predecessor(int node_id, int pred)
-{
-    predecessors[node_id] = pred;
-}
-
-void Graph::set_distance(int node_id, int dist)
-{
-    distances[node_id] = dist;
+    distances[node] = dist;
 }
 
 void Graph::insert_edge(int src, int dest, int weight)
@@ -89,11 +70,10 @@ void Graph::insert_edge(int src, int dest, int weight)
     {
         for (int i = adjacents.size() - 1; i < src + 1; i++)
         {
-            adjacents.push_back(std::vector<Node>{});
+            adjacents.push_back(std::vector<Edge>{});
             distances.push_back(INT_MAX);
             predecessors.push_back(-1);
-            colors.push_back(Color::White);
         }
     }
-    adjacents[src].push_back(Node(dest, weight));
+    adjacents[src].push_back(Edge(dest, weight));
 }

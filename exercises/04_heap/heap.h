@@ -22,15 +22,27 @@ typedef struct BinaryHeap
     int (* comp) (int, int);
 } BinaryHeap;
 
-// Ctor and dtor for the heap structure.
+/**
+ * @brief Ctor for the heap structure
+ * @param  a       The array of integers to be heapified.
+ * @param  size_a  The size of the array.
+ * @param  fcomp   The comparison function that should be used as heap property.
+ */
 BinaryHeap build_heap(int * a, size_t size_a, int (*fcomp)(int,int));
+
+// Dtor for heap structure
 void free_heap(BinaryHeap * H);
 
-// Returns the root node and the last node of the heap.
+// Returns the position 0.
 int root();
+
+// Returns the position of the last value inside the heap.
 int last(BinaryHeap * H);
 
-// Return the index of left/right child/parent of i-th node.
+/** Return the index of left/right child/parent of i-th node.
+ *  The heap is mapped to an array structure by putting nodes belonging
+ *  to the same level close to each other.
+ */
 int left(int i);
 int right(int i);
 int parent(int i);
@@ -47,7 +59,14 @@ int heap_min(BinaryHeap * H);
 // Swaps elements at indices i, m of heap H.
 void heap_swap(BinaryHeap * H, size_t i, size_t m);
 
-// Restores the heap property, auxiliary to build_heap.
+/**
+ * @brief Restores the heap property by swapping nodes iteratively
+ * Iterative implementation required by the assignment,
+ * auxiliary to build_heap and remove_min.
+ * 
+ * @param  H  The heap to be heapified.
+ * @param  i  The index from which the heapification process should start.
+ */
 void heapify(BinaryHeap * H, int i);
 
 // Pops the smallest node in the heap.
@@ -58,8 +77,6 @@ void heap_decrease_key(BinaryHeap * H, int i, int val);
 
 // Inserts a new value in the heap.
 void heap_insert(BinaryHeap * H, int val);
-
-/* Extra methods */
 
 // Prints a heap, for debugging purposes.
 void heap_print(BinaryHeap * H);

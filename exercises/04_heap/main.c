@@ -12,13 +12,13 @@
 #include "heap.h"
 #include "../utility.h"
 
-#define ITERATIONS 5
+#define ITERATIONS 10
 
 int main()
 {
-    const size_t heap_size = 1E8;
+    const size_t heap_size = 1E7;
     unsigned int ** mat = allocate_matrix_unsigned_int(ITERATIONS, heap_size);
-    printf("Generating the value matrix...\n");
+    printf("Generating the value matrix of size %d...\n", heap_size);
     random_fill_matrix_unsigned_int(mat, ITERATIONS, heap_size, heap_size);
 
     struct timespec b_time, e_time;

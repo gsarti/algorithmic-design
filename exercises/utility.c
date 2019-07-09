@@ -67,17 +67,6 @@ float **allocate_matrix(const size_t rows, const size_t cols)
     return A;
 }
 
-int **allocate_matrix_int(const size_t rows, const size_t cols)
-{
-    int **A=(int **)malloc(sizeof(int *)*rows);
-
-    for (size_t i=0; i<rows; i++) 
-    {
-        A[i]=(int *)malloc(sizeof(int)*cols);
-    }
-    return A;
-}
-
 unsigned int **allocate_matrix_unsigned_int(const size_t rows, const size_t cols)
 {
     unsigned int **A=(unsigned int **)malloc(sizeof(unsigned int *)*rows);
@@ -101,19 +90,6 @@ void deallocate_matrix(void **A, const size_t rows)
 float **copy_matrix(float **A, const size_t rows, const size_t cols)
 {
     float **C = allocate_matrix(rows, cols);
-    for (size_t i=0; i<rows; i++) 
-    {
-        for (size_t j=0; j<cols; j++) 
-        {
-            C[i][j]=A[i][j];
-        }
-    }
-    return C;
-}
-
-int **copy_matrix_int(int **A, const size_t rows, const size_t cols)
-{
-    int **C = allocate_matrix_int(rows, cols);
     for (size_t i=0; i<rows; i++) 
     {
         for (size_t j=0; j<cols; j++) 
@@ -152,47 +128,6 @@ int same_matrix(float **A, const size_t A_rows, const size_t A_cols,
     return 1;
 }
 
-int same_matrix_int(int **A, const size_t A_rows, const size_t A_cols,
-		            int **B, const size_t B_rows, const size_t B_cols)
-{
-    if ((A_rows != B_rows) || (A_cols != B_cols)) 
-    {
-        return 0;
-    }
-    for (size_t i=0; i<A_rows; i++) 
-    {
-        for (size_t j=0; j<A_cols; j++) 
-        {
-            if (A[i][j] != B[i][j]) 
-            {
-	            return 0;
-            }
-        }
-    }
-    return 1;
-}
-
-int same_matrix_approx(float **A, const size_t A_rows, const size_t A_cols,
-		               float **B, const size_t B_rows, const size_t B_cols,
-                       float prec)
-{
-    if ((A_rows != B_rows) || (A_cols != B_cols)) 
-    {
-        return 0;
-    }
-    for (size_t i=0; i<A_rows; i++) 
-    {
-        for (size_t j=0; j<A_cols; j++) 
-        {
-            float ratio = A[i][j] / B[i][j];
-            float err = 1 - ratio > 0 ? 1 - ratio : ratio - 1;
-            if (err > prec)
-                return 0;
-        }
-    }
-    return 1;
-}
-
 void random_fill_matrix(float **A, const size_t rows, 
                           const size_t cols, const int max)
 {
@@ -201,18 +136,6 @@ void random_fill_matrix(float **A, const size_t rows,
         for (size_t j=0; j< cols; j++) 
         {
    	        A[i][j]=rand() % (2 * max) - max;
-        }
-    }
-}
-
-void random_fill_matrix_int(int **A, const size_t rows, 
-                              const size_t cols, const int max)
-{
-    for (size_t i=0; i< rows; i++) 
-    {
-        for (size_t j=0; j< cols; j++) 
-        {
-   	        A[i][j]=(int)(rand() % (2 * max) - max);
         }
     }
 }
@@ -267,52 +190,6 @@ void random_fill_array_unsigned_int(unsigned int *a, const size_t size,
     }
 }
 
-
-
-void print_matrix(float **A, const size_t rows, const size_t cols)
-{
-    printf("\n");
-    for(int i = 0; i < rows; i++)
-    {
-        for(int j = 0; j < cols; j++)
-        {
-            printf("%f, ", A[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-void print_array(float *a, const size_t n)
-{
-    printf("\n");
-    for(int i = 0; i < n; i++)
-    {
-        printf("%d: %f\n", i, a[i]);
-    }
-}
-
-void print_matrix_int(int **A, const size_t rows, const size_t cols)
-{
-    printf("\n");
-    for(int i = 0; i < rows; i++)
-    {
-        for(int j = 0; j < cols; j++)
-        {
-            printf("%d, ", A[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-void print_array_int(int *a, const size_t n)
-{
-    printf("\n");
-    for(int i = 0; i < n; i++)
-    {
-        printf("%d: %d\n", i, a[i]);
-    }
-}
-
 int max_array_int(int* array, size_t size)
 {
     int max = array[0];
@@ -347,8 +224,6 @@ int check_sorted_int(int * array, size_t size)
 
     return check_sorted_int(array, size - 1);
 }
-
-
 
 double get_execution_time(const struct timespec b_time,
                           const struct timespec e_time)

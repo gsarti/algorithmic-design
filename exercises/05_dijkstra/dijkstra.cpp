@@ -8,7 +8,7 @@
 
 void graph_init(Graph& G)
 {
-    for (size_t i = 0; i < G.get_adjacent_size(); i++)
+    for (size_t i = 0; i < G.size(); i++)
     {
         G.set_distance(i, INT_MAX);
         G.set_predecessor(i, -1);
@@ -17,8 +17,8 @@ void graph_init(Graph& G)
 
 void relax(Graph& G, int src, int dest, int weight)
 {
-    int src_dist = G.get_distance(src);
-    int dest_dist = G.get_distance(dest);
+    size_t src_dist = G.get_distance(src);
+    size_t dest_dist = G.get_distance(dest);
     if(src_dist + weight < dest_dist)
     {
         G.set_distance(dest, src_dist + weight);
@@ -26,26 +26,24 @@ void relax(Graph& G, int src, int dest, int weight)
     }
 }
 
-void dijkstra_array(Graph& G, int src)
+void dijkstra_vector(Graph& G, int src)
 {
     graph_init(G);
     G.set_distance(src, 0);
     int idx = 0;
     std::vector<int>& dist = G.get_distances();
-    std::vector<Node> adj(G.get_adjacent_size());
-    for (size_t i = 0; i < G.get_adjacent_size(); i++)
+    std::vector<Edge> adj(G.size());
+    for (size_t i = 0; i < G.size(); i++)
     {
         adj[i].edge.first = &dist[i];
         adj[i].edge.second = i;
     }
-    while(idx < G.get_adjacent_size())
+    while(adj.size() != 0)
     {
-        int min = get_min(adj, idx++, G.get_adjacent_size());
-        std::vector<int> neighbours = G.get_neighbours(min);
-        for(auto node: neighbours)
+        int min = pop_min(adj);
+        for(auto node: G.get_neighbours(min))
         {
-            int weight = G.get_weigth(min, node);
-            relax(G, min, node, weight);
+            relax(G, min, node, G.get_weigth(min, node));
         }
     }
 }
@@ -55,8 +53,8 @@ void dijkstra_heap(Graph& G, int src)
     graph_init(G);
     G.set_distance(src, 0);
     std::vector<int>& dist = G.get_distances();
-    std::vector<Node> adj(G.get_adjacent_size());
-    for (size_t i = 0; i < G.get_adjacent_size(); i++)
+    std::vector<Edge> adj(G.size());
+    for (size_t i = 0; i < G.size(); i++)
     {
         adj[i].edge.first = &dist[i];
         adj[i].edge.second = i;
@@ -73,19 +71,19 @@ void dijkstra_heap(Graph& G, int src)
     }
 }
 
-void print_path_rec(Graph G, int dest)
+void print_path_rec(Graph G, int dest, int dist)
 {
     if (G.get_predecessor(dest) != -1) {
-        print_path_rec(G, G.get_predecessor(dest));
+        print_path_rec(G, G.get_predecessor(dest), G.get_distance(dest));
     }
-    std::cout << dest << "->";  
+    std::cout << dest << "-(" << dist << ")->";  
 }
 
 void print_path(Graph G, int src, int dest)
 {
-    std::cout << "\nShortest path from " << src << " to " << dest << std::endl;
-    print_path_rec(G, G.get_predecessor(dest));
-    std::cout << dest << "\tdistance = " << G.get_distance(dest) << std::endl;
+    std::cout << "Shortest path from " << src << " to " << dest << ": ";
+    print_path_rec(G, G.get_predecessor(dest), G.get_distance(dest));
+    std::cout << dest << std::endl;
 }
 
 

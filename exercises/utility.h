@@ -9,7 +9,6 @@
 
 #include <stdlib.h>
 
-#define MAX(x, y) (((x) > (y)) ? (x) : (y))
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
 /**
@@ -41,7 +40,6 @@ void naive_matrix_mult(float **C, float **A, float **B,
  * @return   float       The allocated matrix.
  */
 float **allocate_matrix(const size_t rows, const size_t cols);
-int **allocate_matrix_int(const size_t rows, const size_t cols);
 unsigned int **allocate_matrix_unsigned_int(const size_t rows, const size_t cols);
 
 /**
@@ -57,7 +55,6 @@ void deallocate_matrix(void **A, const size_t rows);
  * @return   float       The copied matrix.
  */
 float **copy_matrix(float **A, const size_t rows, const size_t cols);
-int **copy_matrix_int(int **A, const size_t rows, const size_t cols);
 
 // Copies array b into array a
 void copy_array_int(int *a, int *b, const size_t size);
@@ -66,19 +63,10 @@ void copy_array_int(int *a, int *b, const size_t size);
 // Returns 1 if A and B are equal, 0 otherwise.
 int same_matrix(float **A, const size_t A_rows, const size_t A_cols,
 		        float **B, const size_t B_rows, const size_t B_cols);
-int same_matrix_int(int **A, const size_t A_rows, const size_t A_cols,
-		            int **B, const size_t B_rows, const size_t B_cols);
-
-// Returns 1 if A and B are approximately equal with precision prec, 0 otherwise
-int same_matrix_approx(float **A, const size_t A_rows, const size_t A_cols,
-		               float **B, const size_t B_rows, const size_t B_cols,
-                       float prec);
 
 // Randomly fills matrix A with values between 0 and max.
 void random_fill_matrix(float **A, const size_t A_rows, 
                           const size_t A_cols, int max);
-void random_fill_matrix_int(int **A, const size_t rows, 
-                              const size_t cols, const int max);
 void random_fill_matrix_unsigned_int(unsigned int **A, const size_t rows, 
                                      const size_t cols, const unsigned int max);
 
@@ -90,12 +78,6 @@ void sequential_fill_array_int(int *a, const size_t size, int reverse);
 
 void random_fill_array_unsigned_int(unsigned int *a, const size_t size, 
                                     const unsigned int max);
-
-// Prints the content of a matrix in console
-void print_matrix(float **A, const size_t rows, const size_t cols);
-void print_array(float *a, const size_t n);
-void print_matrix_int(int **A, const size_t rows, const size_t cols);
-void print_array_int(int *a, const size_t n);
 
 // Find the max value in an int array of size "size"
 int max_array_int(int* array, size_t size);
